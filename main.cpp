@@ -147,13 +147,13 @@ public:
         NodoDato* actual = frente;
         while (actual) {
             if (actual->temperatura > 35.0) {
-                alertas.push("Temperatura alta", actual->sensorId);
+                alertas.push("Temperatura alta (>35)", actual->sensorId);
             }
             if (actual->humedad > 80.0) {
-                alertas.push("Humedad alta", actual->sensorId);
+                alertas.push("Humedad alta (>80)", actual->sensorId);
             }
             if (actual->temperatura < 5.0) {
-                alertas.push("Temperatura baja", actual->sensorId);
+                alertas.push("Temperatura baja (<5)", actual->sensorId);
             }
             actual = actual->siguiente;
         }
@@ -189,8 +189,6 @@ public:
         int opcion;
         bool activo = true;
         
-        // Datos de ejemplo
-        agregarEjemplos();
         
         while (activo) {
             mostrarMenu();
@@ -223,15 +221,6 @@ public:
     }
     
 private:
-    void agregarEjemplos() {
-        sensores.agregar(1, 25.0, 60.0);
-        sensores.agregar(2, 38.5, 45.0);  // Generará alerta de temperatura
-        sensores.agregar(3, 20.0, 85.0);  // Generará alerta de humedad
-        
-        colaDatos.encolar(1, 25.0, 60.0);
-        colaDatos.encolar(2, 38.5, 45.0);
-        colaDatos.encolar(3, 20.0, 85.0);
-    }
     
     void agregarSensor() {
         int id;

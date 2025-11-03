@@ -1,4 +1,5 @@
 #include <iostream>
+using namespace std;
 
 // 1ra Estructura: Lista Enlazada para sensores
 struct NodoSensor {
@@ -33,9 +34,9 @@ public:
     void mostrar() {
         NodoSensor* actual = cabeza;
         while (actual) {
-            std::cout << "Sensor " << actual->id 
+            cout << "Sensor " << actual->id 
                       << " - Temp: " << actual->temperatura 
-                      << "°C, Hum: " << actual->humedad << "%\n";
+                      << "Â°C, Hum: " << actual->humedad << "%\n";
             actual = actual->siguiente;
         }
     }
@@ -92,7 +93,7 @@ public:
         NodoAlerta* actual = tope;
         int contador = 0;
         while (actual && contador < 5) {
-            std::cout << "? " << actual->mensaje << " (Sensor " << actual->sensorId << ")\n";
+            cout << "? " << actual->mensaje << " (Sensor " << actual->sensorId << ")\n";
             actual = actual->siguiente;
             contador++;
         }
@@ -174,14 +175,14 @@ private:
     
 public:
     void mostrarMenu() {
-        std::cout << "\n=== SISTEMA DE MONITOREO AMBIENTAL ===\n";
-        std::cout << "1. Agregar sensor\n";
-        std::cout << "2. Ver sensores\n";
-        std::cout << "3. Procesar datos\n";
-        std::cout << "4. Ver alertas\n";
-        std::cout << "5. Guardar datos\n";
-        std::cout << "6. Salir\n";
-        std::cout << "Opcion: ";
+        cout << "\n=== SISTEMA DE MONITOREO AMBIENTAL ===\n";
+        cout << "1. Agregar sensor\n";
+        cout << "2. Ver sensores\n";
+        cout << "3. Procesar datos\n";
+        cout << "4. Ver alertas\n";
+        cout << "5. Guardar datos\n";
+        cout << "6. Salir\n";
+        cout << "Opcion: ";
     }
     
     void ejecutar() {
@@ -193,7 +194,7 @@ public:
         
         while (activo) {
             mostrarMenu();
-            std::cin >> opcion;
+            cin >> opcion;
             
             switch (opcion) {
                 case 1:
@@ -213,10 +214,10 @@ public:
                     break;
                 case 6:
                     activo = false;
-                    std::cout << "Saliendo del sistema...\n";
+                    cout << "Saliendo del sistema...\n";
                     break;
                 default:
-                    std::cout << "Opcion no valida\n";
+                    cout << "Opcion no valida\n";
             }
         }
     }
@@ -224,8 +225,8 @@ public:
 private:
     void agregarEjemplos() {
         sensores.agregar(1, 25.0, 60.0);
-        sensores.agregar(2, 38.5, 45.0);  // Generará alerta de temperatura
-        sensores.agregar(3, 20.0, 85.0);  // Generará alerta de humedad
+        sensores.agregar(2, 38.5, 45.0);  // GenerarÃ¡ alerta de temperatura
+        sensores.agregar(3, 20.0, 85.0);  // GenerarÃ¡ alerta de humedad
         
         colaDatos.encolar(1, 25.0, 60.0);
         colaDatos.encolar(2, 38.5, 45.0);
@@ -236,41 +237,41 @@ private:
         int id;
         double temp, hum;
         
-        std::cout << "ID del sensor: ";
-        std::cin >> id;
-        std::cout << "Temperatura (°C): ";
-        std::cin >> temp;
-        std::cout << "Humedad (%): ";
-        std::cin >> hum;
+        cout << "ID del sensor: ";
+        cin >> id;
+        cout << "Temperatura (Â°C): ";
+        cin >> temp;
+        cout << "Humedad (%): ";
+        cin >> hum;
         
         sensores.agregar(id, temp, hum);
         colaDatos.encolar(id, temp, hum);
-        std::cout << "Sensor " << id << " agregado exitosamente!\n";
+        cout << "Sensor " << id << " agregado exitosamente!\n";
     }
     
     void verSensores() {
-        std::cout << "\n=== LISTA DE SENSORES ===\n";
-        if (!sensores.buscar(1)) { // Verificación simple si hay datos
-            std::cout << "No hay sensores registrados.\n";
+        cout << "\n=== LISTA DE SENSORES ===\n";
+        if (!sensores.buscar(1)) { // VerificaciÃ³n simple si hay datos
+            cout << "No hay sensores registrados.\n";
         } else {
             sensores.mostrar();
         }
     }
     
     void procesarDatos() {
-        std::cout << "\nProcesando datos en tiempo real...\n";
+        cout << "\nProcesando datos en tiempo real...\n";
         colaDatos.procesarDatos(alertas);
-        std::cout << "Procesamiento completado. Revise las alertas.\n";
+        cout << "Procesamiento completado. Revise las alertas.\n";
     }
     
     void verAlertas() {
-        std::cout << "\n=== ULTIMAS ALERTAS ===\n";
+        cout << "\n=== ULTIMAS ALERTAS ===\n";
         alertas.mostrar();
     }
     
     void guardarDatos() {
-        std::cout << "\nDatos guardados en memoria del sistema.\n";
-        std::cout << "Persistencia implementada correctamente.\n";
+        cout << "\nDatos guardados en memoria del sistema.\n";
+        cout << "Persistencia implementada correctamente.\n";
     }
 };
 
@@ -279,4 +280,3 @@ int main() {
     sistema.ejecutar();
     return 0;
 }
-

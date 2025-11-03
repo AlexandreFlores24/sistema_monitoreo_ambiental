@@ -1,7 +1,6 @@
-#include <cstdlib>
 #include <iostream>
-
 using namespace std;
+/*Sistema de Monitoreo Ambiental con Red de Sensores*/
 
 int main(int argc, char *argv[])
 {

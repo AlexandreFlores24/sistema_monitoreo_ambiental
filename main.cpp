@@ -33,6 +33,10 @@ public:
     
     void mostrar() {
         NodoSensor* actual = cabeza;
+        if (!actual) {
+            cout << "No hay sensores registrados.\n";
+            return;
+        }
         while (actual) {
             cout << "Sensor " << actual->id 
                       << " - Temp: " << actual->temperatura 
@@ -48,6 +52,10 @@ public:
             actual = actual->siguiente;
         }
         return NULL;
+    }
+    
+    bool estaVacia() {
+        return cabeza == NULL;
     }
     
     ~ListaSensores() {
@@ -92,8 +100,12 @@ public:
     void mostrar() {
         NodoAlerta* actual = tope;
         int contador = 0;
+        if (!actual) {
+            cout << "No hay alertas registradas.\n";
+            return;
+        }
         while (actual && contador < 5) {
-            cout << "? " << actual->mensaje << " (Sensor " << actual->sensorId << ")\n";
+            cout << "⚠ " << actual->mensaje << " (Sensor " << actual->sensorId << ")\n";
             actual = actual->siguiente;
             contador++;
         }
@@ -147,15 +159,20 @@ public:
         NodoDato* actual = frente;
         while (actual) {
             if (actual->temperatura > 35.0) {
-                alertas.push("Temperatura alta (>35)", actual->sensorId);
+                alertas.push("Temperatura alta", actual->sensorId);
             }
             if (actual->humedad > 80.0) {
-                alertas.push("Humedad alta (>80)", actual->sensorId);
+                alertas.push("Humedad alta", actual->sensorId);
             }
             if (actual->temperatura < 5.0) {
-                alertas.push("Temperatura baja (<5)", actual->sensorId);
+                alertas.push("Temperatura baja", actual->sensorId);
             }
             actual = actual->siguiente;
+        }
+        
+        // Limpiar la cola después de procesar
+        while (frente) {
+            desencolar();
         }
     }
     
@@ -189,7 +206,6 @@ public:
         int opcion;
         bool activo = true;
         
-        
         while (activo) {
             mostrarMenu();
             cin >> opcion;
@@ -221,7 +237,6 @@ public:
     }
     
 private:
-    
     void agregarSensor() {
         int id;
         double temp, hum;
@@ -240,11 +255,7 @@ private:
     
     void verSensores() {
         cout << "\n=== LISTA DE SENSORES ===\n";
-        if (!sensores.buscar(1)) { // Verificación simple si hay datos
-            cout << "No hay sensores registrados.\n";
-        } else {
-            sensores.mostrar();
-        }
+        sensores.mostrar(); // El método mostrar() ahora maneja el caso vacío
     }
     
     void procesarDatos() {
